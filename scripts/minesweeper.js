@@ -14,7 +14,9 @@
 			this.revealBombs 		= this.revealBombs.bind(this);
 			this.hasWon 			= this.hasWon.bind(this);
 			this.gameOver 			= this.gameOver.bind(this);
-			this.startTimer 			= this.startTimer.bind(this);
+			this.startTimer 		= this.startTimer.bind(this);
+			this.updateBombCount 	= this.updateBombCount.bind(this);
+			this.updateTime 		= this.updateTime.bind(this);
 			
 			this.container = document.querySelector('#board');
 			this.container.innerHTML = '';
@@ -37,10 +39,11 @@
 				this.number_of_bombs = this.number_of_tiles - 1;
 			}
 
-			document.querySelector('#number_of_bombs').innerHTML = this.number_of_bombs;
+			this.updateBombCount();
 
 			this.time_elapsed = 0;
 			this.timer;
+			this.updateTime();
 
 			this.generateBoard();
 			this.setBombs();
@@ -48,10 +51,18 @@
 			this.drawBoard();
 		}
 
+		updateBombCount() {
+			document.querySelector('#number_of_bombs').innerHTML = this.number_of_bombs;
+		}
+
+		updateTime() {
+			document.querySelector('#time_elapsed').innerHTML = `${this.time_elapsed} seconds`;
+		}
+
 		startTimer() {
 			this.timer = setInterval(() => {
 				this.time_elapsed++;
-				document.querySelector('#time_elapsed').innerHTML = `${this.time_elapsed} seconds`;
+				this.updateTime();
 			}, 1000);
 		}
 
@@ -206,29 +217,36 @@
 		drawBoard() {
 
 			this.board.map((arr, y) => {
+				
 				let row = document.createElement('div');
 					row.className = 'row';
 
-				arr.map((_, x) => {
+				arr.map((tile, x) => {
 
-					let tile = document.createElement('div');
-						tile.id = `tile_${y}_${x}`;
-						tile.className = 'tile';
-						tile.setAttribute('y', y);
-						tile.setAttribute('x', x);
-						tile.addEventListener('click', this.tileClick);
+					let tile_element = document.createElement('div');
+						tile_element.id = `tile_${y}_${x}`;
+						tile_element.className = 'tile';
+						tile_element.setAttribute('y', y);
+						tile_element.setAttribute('x', x);
+						tile_element.addEventListener('click', this.tileClick);
 
 						// right click
-						tile.oncontextmenu = () => {
+						tile_element.oncontextmenu = () => {
+
 							if ( this.isGameOver ) {
 								return false;
 							}
 
-							tile.className = 'tile flag';
+							tile_element.className = tile.is_flag ? 'tile' : 'tile flag';
+							this.number_of_bombs += tile.is_flag ? 1 : -1;
+							tile.is_flag = ! tile.is_flag;
+
+							this.updateBombCount();
+
 							return false;
 						}
 
-					row.appendChild(tile);
+					row.appendChild(tile_element);
 				});
 
 				this.container.appendChild(row);
