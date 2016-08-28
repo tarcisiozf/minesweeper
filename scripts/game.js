@@ -33,5 +33,17 @@
 			return;
 		}
 
+		if ( width > 40 ) {
+			alert('The maximum width is 40!');
+			width_el.value = 40;
+			return;
+		}
+
+		if ( height > 22 ) {
+			alert('The maximum height is 22!');
+			height_el.value = 22;
+			return;
+		}
+
 		game = new MineSweeper(width, height, difficulty_table[difficulty]);
 	});
