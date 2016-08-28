@@ -77,7 +77,7 @@
 
 			setTimeout(function () {
 				alert('CONGRATULATIONS!');
-			}, 1500);
+			}, 1000);
 		}
 
 		gameOver() {
@@ -232,7 +232,7 @@
 						// right click
 						tile_element.oncontextmenu = () => {
 
-							if ( this.isGameOver ) {
+							if ( this.isGameOver || tile.is_open ) {
 								return false;
 							}
 
