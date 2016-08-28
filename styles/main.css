@@ -1,0 +1,43 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+.container {
+	margin: 30px;
+}
+
+.row {
+	width: 100%;
+	float: left;
+}
+
+.tile {
+	width: 24px;
+	height: 24px;
+	float: left;
+	background-color: #959595;
+	margin: 1px;
+	cursor: pointer;
+	line-height: 24px;
+	text-align: center;
+	color: red;
+}
+
+.reveal {
+	background-color: #bbb; 
+}
+
+.flag {
+	background-color: #0585f3;
+	background-image: url('../images/flag.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.bomb {
+	background-color: #f94b4b;
+	background-image: url('../images/exploding.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+}

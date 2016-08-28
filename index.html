@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mine Sweeper</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="styles/main.css">
+</head>
+<body>
+	<div class="container">
+		<b>Board width:</b>
+		<input type="number" id="width" value="20" />
+		<br/>
+		<b>Board height:</b>
+		<input type="number" id="height" value="12" />
+		<br/>
+		<b>Difficulty:</b>
+		<select id="difficulty">
+			<option value="easy">Easy</option>
+			<option value="medium">Medium</option>
+			<option value="hard">Hard</option>
+			<option value="extreme">Extreme</option>
+		</select>
+		<br/>
+		<button id="start">GO!</button>
+		<br/><br/><br/>
+		<b>Number of bombs:</b>
+		<span id="number_of_bombs"></span>
+		<br/>
+		<b>Time elapsed:</b>
+		<span id="time_elapsed"></span>
+		<br/>
+	</div>
+	<div class="container" id="board"></div>
+	<script type="text/javascript" src="scripts/minesweeper.js"></script>
+	<script type="text/javascript" src="scripts/game.js"></script>
+</body>
+</html>
