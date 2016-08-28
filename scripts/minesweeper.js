@@ -33,7 +33,7 @@
 
 			if ( this.difficulty < 1 ) {
 				this.number_of_bombs = Math.ceil( this.number_of_tiles * this.difficulty );
-			} else {
+			} else { // extreme mode
 				this.number_of_bombs = this.number_of_tiles - 1;
 			}
 
@@ -173,7 +173,7 @@
 
 		setBombs() {
 			let i = 0;
-			
+
 			while (i < this.number_of_bombs) {
 				let y = this.getRandomPosition(this.board);
 				let x = this.getRandomPosition(this.board[y]);
