@@ -39,6 +39,8 @@
 				this.number_of_bombs = this.number_of_tiles - 1;
 			}
 
+			this.free_tiles = this.number_of_tiles - this.number_of_bombs;
+
 			this.updateBombCount();
 
 			this.time_elapsed = 0;
@@ -67,13 +69,15 @@
 		}
 
 		hasWon() {
-			if ( this.number_of_open_tiles != (this.number_of_tiles - this.number_of_bombs) ) {
+			if ( this.number_of_open_tiles != this.free_tiles ) {
 				return;
 			}
 
 			this.gameOver();
 
-			alert('CONGRATULATIONS!');
+			setTimeout(function () {
+				alert('CONGRATULATIONS!');
+			}, 1500);
 		}
 
 		gameOver() {
@@ -103,7 +107,7 @@
 			if ( tile.number > 0 ) {
 				tile_element.innerHTML = tile.number;
 			} else {
-				this.getSurrounding(tile.x, tile.y, false)
+				this.getSurrounding(tile.x, tile.y)
 					.map(side_tile => this.revealNumbers(side_tile));
 			}
 
@@ -130,24 +134,19 @@
 			this.hasWon();
 		}
 
-		getSurrounding(x, y, diagonal = false) {
+		getSurrounding(x, y) {
 			let tiles = [];
 
-			let positions = [
+			[
 				[-1, 0],	// top center
 				[0, -1],	// medium left
 				[0, 1],		// medium right
 				[1, 0],		// bottom center
-			];
-
-			if ( diagonal ) {
-				positions.push([-1, -1]); 	// top left
-				positions.push([-1, 1]);	// top right
-				positions.push([1, -1]);	// bottom left
-				positions.push([1, 1]);		// bottom right
-			}
-
-			positions.map(pos => {
+				[-1, -1], 	// top left
+				[-1, 1],	// top right
+				[1, -1],	// bottom left
+				[1, 1],		// bottom right
+			].map(pos => {
 
 				let tile_y = y + pos[0];
 				let tile_x = x + pos[1];
@@ -170,7 +169,7 @@
 
 				tile.number = 0;
 
-				this.getSurrounding(x, y, true).map(side_tile => {
+				this.getSurrounding(x, y).map(side_tile => {
 					if ( side_tile.is_bomb ) {
 						tile.number++;
 					}
@@ -217,7 +216,7 @@
 		drawBoard() {
 
 			this.board.map((arr, y) => {
-				
+
 				let row = document.createElement('div');
 					row.className = 'row';
 
